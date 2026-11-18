@@ -10,7 +10,7 @@ let masterGain=null,musicTimer=null,noteIndex=0;
 function ensureAudio(){
  const AC=window.AudioContext||window.webkitAudioContext;
  if(!AC)return false;
- if(!audio){audio=new AC();masterGain=audio.createGain();masterGain.gain.value=0.0001;masterGain.connect(audio.destination);}
+ if(!audio){audio=new AC();masterGain=audio.createGain();masterGain.gain.value=.72;masterGain.connect(audio.destination);}
  if(audio.state==="suspended")audio.resume();
  return true;
 }
@@ -24,13 +24,13 @@ function playNote(freq,duration=.28,volume=.12,wave="sine"){
 function startMusic(){
  if(!musicOn||!ensureAudio())return;
  if(musicTimer)clearInterval(musicTimer);
- masterGain.gain.cancelScheduledValues(audio.currentTime);masterGain.gain.setTargetAtTime(.72,audio.currentTime,.12);
+ masterGain.gain.setTargetAtTime(.72,audio.currentTime,.08);
  const tick=()=>{playNote(melody[noteIndex%melody.length],.30,.105,"triangle");if(noteIndex%4===0)playNote(melody[(noteIndex+4)%melody.length]/2,.42,.045,"sine");noteIndex++;};
  tick();musicTimer=setInterval(tick,360);
 }
 function stopMusic(){
  if(musicTimer){clearInterval(musicTimer);musicTimer=null;}
- if(audio&&masterGain){masterGain.gain.cancelScheduledValues(audio.currentTime);masterGain.gain.setTargetAtTime(.0001,audio.currentTime,.08);}
+ // Los efectos breves siguen disponibles aunque la música esté apagada.
 }
 function soundEffect(kind="pop"){
  const tones={pop:[660,.12],success:[880,.22],water:[740,.18],harvest:[1046.5,.25]};
