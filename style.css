@@ -17,7 +17,7 @@ button{font:inherit}.primary,.secondary{border:3px solid var(--ink);border-radiu
 .primary{background:#ffdb4f;color:#352a1e;font-size:17px}.secondary{background:#d9f3c9;color:#352a1e}
 .primary:active,.secondary:active,.small-btn:active{transform:translateY(3px);box-shadow:0 1px 0 var(--ink)}
 .tiny{font-size:12px;margin:15px 0 0;color:#766b5c}
-.message{position:absolute;left:50%;top:12px;transform:translateX(-50%);max-width:90%;background:#fffdf0;border:3px solid var(--ink);border-radius:18px;padding:9px 16px;font-weight:900;text-align:center;box-shadow:0 3px 0 var(--ink);display:none;line-height:1.25}
+.message{position:absolute;left:50%;top:auto;bottom:14px;transform:translateX(-50%);max-width:90%;background:#fffdf0;border:3px solid var(--ink);border-radius:18px;padding:9px 16px;font-weight:900;text-align:center;box-shadow:0 3px 0 var(--ink);display:none;line-height:1.25}
 footer{display:flex;justify-content:space-between;padding:10px 18px;font-weight:900;background:#e6f6cf;border-top:3px solid var(--ink);font-size:14px;gap:8px}
 .pause-panel{background:rgba(43,61,34,.45)}.compact{max-width:390px}.compact button{width:100%;margin-top:8px}.hidden{display:none!important}
 @media(max-width:600px){body{padding:0;background:#fff9e8}.app{border:0;border-radius:0;box-shadow:none}.topbar{padding:8px 10px}.small-btn{font-size:12px;padding:7px}.brand{font-size:14px}footer{font-size:12px;padding:8px 10px}.panel{padding:16px}.intro{font-size:15px}}
