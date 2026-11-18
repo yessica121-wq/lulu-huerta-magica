@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+  <meta name="theme-color" content="#8bd8f4">
+  <meta name="description" content="Lulú y la huerta mágica: una aventura para cuidar, sembrar y descubrir.">
+  <title>Lulú y la huerta mágica</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="app">
+    <header class="topbar">
+      <div class="brand"><span class="brand-mark">🌱</span><span>Lulú y la huerta mágica</span></div>
+      <div class="top-actions">
+        <button id="musicBtn" class="small-btn">♫ Música: sí</button>
+        <button id="pauseBtn" class="small-btn">Ⅱ Pausa</button>
+      </div>
+    </header>
+    <section class="game-shell">
+      <canvas id="game" width="960" height="600" aria-label="Videojuego Lulú y la huerta mágica"></canvas>
+      <div id="overlay" class="overlay">
+        <div class="panel">
+          <div class="worm-emoji">🐛👑</div>
+          <p class="eyebrow">UNA AVENTURA PARA CUIDAR, SEMBRAR Y DESCUBRIR</p>
+          <h1>Lulú y la<br>huerta mágica</h1>
+          <p class="intro">¡Hola, amiguito! Soy Lulú. ¿Me ayudas a recuperar la magia de nuestra huerta?</p>
+          <div class="menu-buttons">
+            <button id="playBtn" class="primary">🌼 JUGAR AVENTURA</button>
+            <button id="meetBtn" class="secondary">💜 CONOCE A LULÚ</button>
+            <button id="howBtn" class="secondary">❔ CÓMO JUGAR</button>
+          </div>
+          <p class="tiny">Puedes jugar con el mouse o tocando la pantalla.</p>
+        </div>
+      </div>
+      <div id="message" class="message" aria-live="polite"></div>
+      <div id="pausePanel" class="pause-panel hidden">
+        <div class="panel compact"><h2>¡Tomemos un descansito!</h2><p>Lulú te espera.</p><button id="resumeBtn" class="primary">▶ Continuar</button><button id="restartBtn" class="secondary">↻ Reiniciar aventura</button></div>
+      </div>
+    </section>
+    <footer><span id="missionLabel">Prepara tus manitas para jugar</span><span id="seedLabel">Semillitas: 0 / 5</span></footer>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>
