@@ -5,7 +5,8 @@ const overlay=document.getElementById("overlay"),pausePanel=document.getElementB
 const message=document.getElementById("message"),missionLabel=document.getElementById("missionLabel"),seedLabel=document.getElementById("seedLabel");
 const W=960,H=600;let screen="menu",mission=0,seeds=0,stars=0,badges=[],paused=false,musicOn=true,anim=0,items=[],picked=0,toastTimer=0,audio=null,transitionTimer=null,dragging=null,plots=[],waterDrops=[],sparkles=[];
 const missions=["¡Busca a Lulú!","¡Explora los tesoros de la huerta!","¡Siembra tus semillas!","¡Riega y haz crecer las plantas!","¡Cosecha los alimentos!"];
-const melody=[523.25,659.25,783.99,659.25,587.33,698.46,880,698.46,523.25,587.33,659.25,783.99,698.46,659.25,587.33,523.25];
+// Melodía original alegre en Sol mayor: frase juguetona, saltarina y fácil de recordar.
+const melody=[783.99,987.77,1174.66,987.77,880,1046.5,1318.51,1174.66,783.99,880,987.77,1174.66,1318.51,1174.66,987.77,880];
 let masterGain=null,musicTimer=null,noteIndex=0,luluX=480,luluY=340,luluVisible=true,waterStream=0,waterCan={x:845,y:220};
 // Progreso persistente de los tres surcos: 0=tierra, 1=semilla sembrada, 2=planta regada y crecida.
 let gardenStages=[0,0,0];
@@ -23,22 +24,32 @@ function playNote(freq,duration=.32,volume=.08,wave="triangle"){
  gain.gain.setValueAtTime(.0001,now);gain.gain.exponentialRampToValueAtTime(volume,now+.018);gain.gain.exponentialRampToValueAtTime(.0001,now+duration);
  osc.connect(filter);filter.connect(gain);gain.connect(masterGain);osc.start(now);osc.stop(now+duration+.035);
 }
-function playPercussion(kind){if(!ensureAudio())return;const now=audio.currentTime,osc=audio.createOscillator(),gain=audio.createGain();osc.type="sine";osc.frequency.setValueAtTime(kind==="kick"?105:kind==="bell"?1320:330,now);if(kind==="kick")osc.frequency.exponentialRampToValueAtTime(62,now+.16);gain.gain.setValueAtTime(kind==="bell"?.025:.025,now);gain.gain.exponentialRampToValueAtTime(.001,now+(kind==="bell"?.22:.16));osc.connect(gain);gain.connect(masterGain);osc.start(now);osc.stop(now+.24);}
+function playPercussion(kind){
+ if(!ensureAudio())return;
+ const now=audio.currentTime,osc=audio.createOscillator(),gain=audio.createGain();
+ if(kind==="kick"){osc.type="sine";osc.frequency.setValueAtTime(125,now);osc.frequency.exponentialRampToValueAtTime(48,now+.13);gain.gain.setValueAtTime(.0001,now);gain.gain.exponentialRampToValueAtTime(.075,now+.008);gain.gain.exponentialRampToValueAtTime(.0001,now+.15);osc.connect(gain);gain.connect(masterGain);osc.start(now);osc.stop(now+.17);}
+ else if(kind==="bell"){osc.type="sine";osc.frequency.setValueAtTime(1568,now);gain.gain.setValueAtTime(.0001,now);gain.gain.exponentialRampToValueAtTime(.035,now+.01);gain.gain.exponentialRampToValueAtTime(.0001,now+.19);osc.connect(gain);gain.connect(masterGain);osc.start(now);osc.stop(now+.21);}
+ else {osc.type="triangle";osc.frequency.setValueAtTime(420,now);gain.gain.setValueAtTime(.0001,now);gain.gain.exponentialRampToValueAtTime(.025,now+.006);gain.gain.exponentialRampToValueAtTime(.0001,now+.07);osc.connect(gain);gain.connect(masterGain);osc.start(now);osc.stop(now+.08);}
+}
 function startMusic(){
  if(!musicOn||!ensureAudio())return;
  if(musicTimer)clearInterval(musicTimer);
- masterGain.gain.setTargetAtTime(.34,audio.currentTime,.25);
- const chords=[[261.63,329.63,392],[196,246.94,293.66],[220,261.63,329.63],[174.61,220,261.63]];
+ masterGain.gain.setTargetAtTime(.48,audio.currentTime,.18);
+ const chords=[[392,493.88,587.33],[293.66,369.99,440],[329.63,392,493.88],[261.63,329.63,392]];
+ const bass=[196,146.83,164.81,130.81],beatMs=210;
  const beat=()=>{
-  const i=noteIndex%16,bar=Math.floor(noteIndex/4)%4,chord=chords[bar];
-  playNote(melody[i],.29,.075,"triangle");
-  if(i%4===0){playNote(chord[0]/2,.55,.045,"sine");playNote(chord[1],.42,.025,"sine");}
-  if(i%2===1)playNote(chord[(i+1)%3]*2,.16,.018,"sine");
-  if(i%4===0)playPercussion("kick");
-  if(i%8===7)playPercussion("bell");
+  const i=noteIndex%16,bar=Math.floor(i/4)%4,chord=chords[bar],step=i%4;
+  // Melodía principal con ataque brillante y notas cortas.
+  playNote(melody[i],.19,.095,"triangle");
+  // Bajo saltarín y acordes ligeros para dar sensación de canción de aventura.
+  if(step===0||step===2)playNote(bass[bar],.22,.055,"sine");
+  if(step===0)chord.forEach((n,k)=>playNote(n,.25,k===0?.026:.018,"triangle"));
+  if(step===1||step===3)playPercussion("hat");
+  if(step===0||step===2)playPercussion("kick");
+  if(i===7||i===15)playPercussion("bell");
   noteIndex++;
  };
- noteIndex=0;beat();musicTimer=setInterval(beat,285);
+ noteIndex=0;beat();musicTimer=setInterval(beat,beatMs);
 }
 function stopMusic(){
  if(musicTimer){clearInterval(musicTimer);musicTimer=null;}
