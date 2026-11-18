@@ -180,3 +180,96 @@ footer{display:flex;justify-content:space-between;padding:13px 22px;font-weight:
   .diploma-name { font-size:36px!important; }
   .diploma input { display:none!important; }
 }
+
+
+/* Diploma inspirado en la portada: cielo celeste, colinas verdes,
+   sol amarillo, flores sencillas y trazos oscuros tipo cuento. */
+.diploma {
+  max-width: 560px;
+  padding: 13px 18px 18px;
+  border: 4px solid #30271f;
+  border-radius: 18px;
+  background: #fffdf2;
+  box-shadow: 5px 5px 0 #d6b55e;
+  color: #315d43;
+  text-align: center;
+  overflow: hidden;
+}
+.diploma-cover {
+  height: 142px;
+  position: relative;
+  overflow: hidden;
+  margin: -2px -7px 12px;
+  border: 3px solid #30271f;
+  border-radius: 12px;
+  background: #80c5e8;
+}
+.cover-sun {
+  position:absolute; width:34px; height:34px; right:42px; top:17px;
+  border:3px solid #30271f; border-radius:50%; background:#ffdf43;
+}
+.cover-cloud {
+  position:absolute; height:18px; width:53px; top:28px;
+  border:2px solid #30271f; border-radius:18px; background:#fffdf2;
+}
+.cover-cloud:before,.cover-cloud:after {
+  content:""; position:absolute; bottom:4px; border:2px solid #30271f;
+  border-bottom:0; background:#fffdf2; border-radius:50% 50% 0 0;
+}
+.cover-cloud:before { width:19px;height:15px;left:8px; }
+.cover-cloud:after { width:23px;height:19px;left:22px; }
+.cloud-one { left:45px; top:22px; }
+.cloud-two { right:125px; top:47px; transform:scale(.75); }
+.cover-title {
+  position:relative; z-index:3; padding-top:10px;
+  color:#315d43; font-size:25px; line-height:.98; font-weight:1000;
+  letter-spacing:-.8px; text-shadow:1px 1px #fff6c9;
+}
+.cover-lulu {
+  position:absolute; z-index:4; left:50%; top:65px; transform:translateX(-50%);
+  font-size:35px; filter:drop-shadow(1px 2px 0 #30271f);
+}
+.cover-hills {
+  position:absolute; left:-5%; right:-5%; bottom:-45px; height:95px;
+  border:3px solid #30271f; border-radius:50% 50% 0 0;
+  background:#76bd62; transform:rotate(-2deg);
+}
+.cover-hills:after {
+  content:""; position:absolute; left:38%; right:-5%; top:18px; height:95px;
+  border:3px solid #30271f; border-radius:50% 50% 0 0;
+  background:#9bce70;
+}
+.cover-flowers {
+  position:absolute; z-index:5; bottom:1px; left:0; right:0;
+  font-size:20px; letter-spacing:5px; text-shadow:1px 1px #30271f;
+}
+.diploma-kicker { margin:4px 0; color:#8a55b5; font-weight:900; letter-spacing:2px; font-size:11px; }
+.diploma-heading { margin:2px 0 7px; color:#37694a; font-size:25px; }
+.diploma-award { max-width:470px; margin:7px auto 10px!important; font-size:16px; font-weight:850; color:#315d43; }
+.diploma label { display:block; font-size:13px; font-weight:750; margin:8px 0 5px; }
+.diploma input {
+  width:min(100%,280px); border:2px solid #b9cfae; border-radius:10px;
+  padding:9px 11px; font:inherit; text-align:center; color:#315d43; background:white;
+}
+.diploma-name { font-size:25px; font-weight:950; color:#8a55b5; margin:8px 0; overflow-wrap:anywhere; }
+.diploma p { line-height:1.35; }
+@media (max-width:700px) and (orientation:portrait) {
+  .diploma { padding:9px 11px 12px; }
+  .diploma-cover { height:112px; }
+  .cover-title { font-size:21px; }
+  .cover-lulu { top:54px; font-size:29px; }
+  .diploma-award { font-size:13px; }
+  .diploma-name { font-size:20px; }
+}
+@media print {
+  .diploma {
+    max-width:760px!important; padding:18px 28px!important;
+    border:4px solid #30271f!important; box-shadow:5px 5px 0 #d6b55e!important;
+    -webkit-print-color-adjust:exact; print-color-adjust:exact;
+  }
+  .diploma-cover { height:165px!important; }
+  .cover-title { font-size:30px!important; }
+  .cover-lulu { font-size:43px!important; top:76px!important; }
+  .diploma-award { font-size:20px!important; }
+  .diploma-name { font-size:34px!important; }
+}
