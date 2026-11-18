@@ -66,79 +66,84 @@ function drawLulu(x,y,s=1,mood="happy"){
 function drawButterfly(x,y,color,phase){ctx.save();ctx.translate(x+Math.sin(anim/24+phase)*12,y+Math.cos(anim/18+phase)*7);ctx.fillStyle=color;ctx.beginPath();ctx.ellipse(-8,0,8,12,Math.sin(anim/5)*.6,0,Math.PI*2);ctx.ellipse(8,0,8,12,-Math.sin(anim/5)*.6,0,Math.PI*2);ctx.fill();ctx.strokeStyle="#59442f";ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(0,-7);ctx.lineTo(0,8);ctx.stroke();ctx.restore();}
 function drawBee(x,y,phase){ctx.save();ctx.translate(x+Math.sin(anim/17+phase)*10,y+Math.cos(anim/13+phase)*8);ellipse(0,0,12,8,"#ffd84b","#5b4828",2);ctx.strokeStyle="#5b4828";ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(-4,-7);ctx.lineTo(-4,7);ctx.moveTo(4,-7);ctx.lineTo(4,7);ctx.stroke();ellipse(-5,-11,6,4,"#fffdf2","none",0);ellipse(5,-11,6,4,"#fffdf2","none",0);ctx.restore();}
 function drawLadybug(x,y,phase){const xx=x+Math.sin(anim/30+phase)*8,yy=y+Math.cos(anim/21+phase)*5;ellipse(xx,yy,10,8,"#e94f52","#49352c",2);ctx.strokeStyle="#49352c";ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(xx,yy-7);ctx.lineTo(xx,yy+7);ctx.stroke();ellipse(xx-4,yy-2,1.7,1.7,"#30271f","none",0);ellipse(xx+4,yy+2,1.7,1.7,"#30271f","none",0);}
-function drawCloud(x,y,s=1){
- ctx.save();ctx.translate(x+Math.sin(anim/90+x)*9,y);ctx.scale(s,s);
- ctx.fillStyle="rgba(255,255,246,.88)";ctx.beginPath();ctx.ellipse(0,5,43,15,0,0,Math.PI*2);ctx.ellipse(-22,0,20,18,0,0,Math.PI*2);ctx.ellipse(2,-10,24,23,0,0,Math.PI*2);ctx.ellipse(26,1,20,16,0,0,Math.PI*2);ctx.fill();ctx.restore();
+function handLine(points,color="#30271f",width=5){
+ ctx.beginPath();points.forEach((p,i)=>i?ctx.lineTo(p[0],p[1]):ctx.moveTo(p[0],p[1]));
+ ctx.strokeStyle=color;ctx.lineWidth=width;ctx.lineCap="round";ctx.lineJoin="round";ctx.stroke();
 }
-function drawFlower(x,y,color="#f6a4bd",scale=1){
- ctx.save();ctx.translate(x,y);ctx.scale(scale,scale);ctx.strokeStyle="#4d9656";ctx.lineWidth=5;ctx.beginPath();ctx.moveTo(0,10);ctx.quadraticCurveTo(-3,-8,0,-25);ctx.stroke();
- ctx.fillStyle="#65b96b";ctx.beginPath();ctx.ellipse(-9,-8,10,5,-.5,0,Math.PI*2);ctx.ellipse(9,-14,9,5,.5,0,Math.PI*2);ctx.fill();
- for(let i=0;i<5;i++){const a=i*Math.PI*2/5;ctx.beginPath();ctx.ellipse(Math.cos(a)*10,-29+Math.sin(a)*10,7,10,a,0,Math.PI*2);ctx.fillStyle=color;ctx.fill();}
- ctx.beginPath();ctx.arc(0,-29,6,0,Math.PI*2);ctx.fillStyle="#f8d66d";ctx.fill();ctx.restore();
+function storyFlower(x,y,color="#ef5362",s=1){
+ ctx.save();ctx.translate(x,y);ctx.scale(s,s);
+ handLine([[0,9],[-2,-12],[3,-25]],"#30271f",5);handLine([[0,8],[-2,-12],[3,-25]],"#318c4d",3);
+ ctx.beginPath();ctx.ellipse(-8,-9,9,5,-.6,0,Math.PI*2);ctx.fillStyle="#55ad62";ctx.fill();ctx.strokeStyle="#30271f";ctx.lineWidth=2;ctx.stroke();
+ for(let i=0;i<5;i++){const a=i*Math.PI*2/5;ctx.beginPath();ctx.ellipse(Math.cos(a)*10,-29+Math.sin(a)*9,7,10,a,0,Math.PI*2);ctx.fillStyle=color;ctx.fill();ctx.strokeStyle="#30271f";ctx.lineWidth=2.4;ctx.stroke();}
+ ellipse(0,-29,5,5,"#ffd943","#30271f",2);ctx.restore();
+}
+function storyCloud(x,y,s=1){
+ ctx.save();ctx.translate(x+Math.sin(anim/70+x)*8,y);ctx.scale(s,s);
+ ctx.beginPath();ctx.moveTo(-40,8);ctx.quadraticCurveTo(-50,-10,-29,-17);ctx.quadraticCurveTo(-20,-42,4,-27);ctx.quadraticCurveTo(24,-43,35,-17);ctx.quadraticCurveTo(55,-13,43,8);ctx.closePath();ctx.fillStyle="#fffdf4";ctx.fill();ctx.strokeStyle="#30271f";ctx.lineWidth=3;ctx.stroke();ctx.restore();
+}
+function storyBush(x,y,s=1){
+ ctx.save();ctx.translate(x,y);ctx.scale(s,s);
+ ctx.fillStyle="#55a94f";ctx.strokeStyle="#30271f";ctx.lineWidth=4;
+ for(const a of [[-34,0,31,25],[0,-12,38,34],[34,2,31,25]]){ctx.beginPath();ctx.ellipse(a[0],a[1],a[2],a[3],0,0,Math.PI*2);ctx.fill();ctx.stroke();}
+ ctx.restore();
+}
+function storyVegetable(x,y,type){
+ ctx.save();ctx.translate(x,y);
+ if(type==="carrot"){ctx.beginPath();ctx.moveTo(-17,-20);ctx.quadraticCurveTo(0,-29,17,-18);ctx.lineTo(2,36);ctx.quadraticCurveTo(-3,43,-7,34);ctx.closePath();ctx.fillStyle="#f47c32";ctx.fill();ctx.strokeStyle="#30271f";ctx.lineWidth=4;ctx.stroke();handLine([[-3,-20],[-13,-43],[-18,-27],[0,-22],[8,-45],[10,-22]],"#30271f",3);ctx.strokeStyle="#31914d";ctx.lineWidth=6;ctx.stroke();}
+ else if(type==="strawberry"){ctx.beginPath();ctx.moveTo(-21,-15);ctx.quadraticCurveTo(-22,8,0,32);ctx.quadraticCurveTo(22,8,21,-15);ctx.quadraticCurveTo(0,-29,-21,-15);ctx.fillStyle="#ef3f45";ctx.fill();ctx.strokeStyle="#30271f";ctx.lineWidth=4;ctx.stroke();handLine([[-18,-17],[-7,-27],[0,-18],[9,-28],[20,-16]],"#30271f",3);ctx.fillStyle="#318c4d";ctx.beginPath();ctx.ellipse(-8,-23,10,5,-.5,0,Math.PI*2);ctx.ellipse(8,-23,10,5,.5,0,Math.PI*2);ctx.fill();for(const a of [[-9,-5],[7,-2],[-3,9],[10,14],[-12,16]])ellipse(a[0],a[1],1.8,2.5,"#30271f","none",0);}
+ else if(type==="tomato"){ellipse(0,0,23,22,"#ef4148","#30271f",4);handLine([[0,-17],[-7,-27],[-15,-19],[-4,-19],[2,-29],[7,-18],[17,-20],[7,-13]],"#30271f",3);ctx.fillStyle="#31914d";ctx.beginPath();ctx.arc(0,-18,12,Math.PI,Math.PI*2);ctx.fill();}
+ else if(type==="cilantro"){for(let i=0;i<5;i++){const a=-Math.PI/2+i*Math.PI/2.5;ctx.beginPath();ctx.ellipse(Math.cos(a)*11,-15+Math.sin(a)*11,10,15,a,0,Math.PI*2);ctx.fillStyle="#48a85a";ctx.fill();ctx.strokeStyle="#30271f";ctx.lineWidth=3;ctx.stroke();}handLine([[0,-5],[0,29]],"#30271f",3);handLine([[0,29],[-8,40],[7,40]],"#30271f",3);}
+ ctx.restore();
 }
 function drawFence(y=345){
- ctx.save();ctx.strokeStyle="#a97950";ctx.lineWidth=8;ctx.lineCap="round";
+ ctx.save();ctx.strokeStyle="#30271f";ctx.lineWidth=5;ctx.lineCap="round";
  for(let x=18;x<960;x+=82){ctx.beginPath();ctx.moveTo(x,y+35);ctx.lineTo(x,y-25);ctx.lineTo(x+12,y-38);ctx.lineTo(x+24,y-25);ctx.lineTo(x+24,y+35);ctx.stroke();}
- ctx.lineWidth=6;ctx.beginPath();ctx.moveTo(0,y-2);ctx.lineTo(960,y-2);ctx.moveTo(0,y+22);ctx.lineTo(960,y+22);ctx.stroke();ctx.restore();
-}
-function drawLeafVine(x,y,flip=1){
- ctx.save();ctx.translate(x,y);ctx.scale(flip,1);ctx.strokeStyle="#4b9657";ctx.lineWidth=5;ctx.beginPath();ctx.moveTo(0,0);ctx.bezierCurveTo(35,-20,25,-65,72,-76);ctx.stroke();
- for(let i=0;i<4;i++){const yy=-13-i*17,xx=13+i*13;ctx.fillStyle=i%2?"#79bd70":"#5ba963";ctx.beginPath();ctx.ellipse(xx,yy,15,7,-.55,0,Math.PI*2);ctx.fill();}ctx.restore();
+ ctx.strokeStyle="#a56c3d";ctx.lineWidth=8;ctx.beginPath();ctx.moveTo(0,y-2);ctx.lineTo(960,y-2);ctx.moveTo(0,y+22);ctx.lineTo(960,y+22);ctx.stroke();ctx.restore();
 }
 function background(){
  const stage=Math.max(0,Math.min(4,mission));
- const palettes=[
-  ["#91d9f3","#d9f1d0","#8bc878","#b7d98c"],
-  ["#a8ddf0","#e9efc7","#91c879","#b2d58b"],
-  ["#b6e5f1","#e4edc8","#8cbd70","#a87550"],
-  ["#9ddcf0","#d9f0c9","#68b875","#8cbd72"],
-  ["#f5d7a0","#f7e6bd","#a5bd72","#c78c55"]
- ];
- const p=palettes[stage],sky=ctx.createLinearGradient(0,0,0,H);
- sky.addColorStop(0,p[0]);sky.addColorStop(.67,p[1]);sky.addColorStop(1,p[3]);ctx.fillStyle=sky;ctx.fillRect(0,0,W,H);
- // Sol, nubes y pequeñas motas de luz: el mismo lenguaje de cuento en todas las páginas.
- const sunX=stage===4?790:835,sunY=stage===4?95:78;
- const glow=ctx.createRadialGradient(sunX,sunY,8,sunX,sunY,105);glow.addColorStop(0,"rgba(255,239,166,.52)");glow.addColorStop(1,"rgba(255,239,166,0)");
- ctx.fillStyle=glow;ctx.fillRect(sunX-110,sunY-110,220,220);ctx.beginPath();ctx.arc(sunX,sunY,stage===4?34:39,0,Math.PI*2);ctx.fillStyle=stage===4?"#ffd58a":"#ffe69a";ctx.fill();
- drawCloud(170,82,.8);drawCloud(500,120,.62);
- // Colinas en capas para dar profundidad al paisaje.
- ctx.fillStyle=stage===4?"#b5c77d":"#83c982";ctx.beginPath();ctx.moveTo(0,315);ctx.quadraticCurveTo(155,235,335,310);ctx.quadraticCurveTo(525,375,710,286);ctx.quadraticCurveTo(850,245,960,300);ctx.lineTo(960,600);ctx.lineTo(0,600);ctx.fill();
- ctx.fillStyle=stage===0?"#78bd78":stage===4?"#91b96c":"#70b879";ctx.beginPath();ctx.moveTo(0,365);ctx.quadraticCurveTo(220,300,430,375);ctx.quadraticCurveTo(675,435,960,340);ctx.lineTo(960,600);ctx.lineTo(0,600);ctx.fill();
- // Cada misión descubre una zona distinta del mismo mundo.
+ // La página conserva el azul celeste del cuento original.
+ ctx.fillStyle="#80c5e8";ctx.fillRect(0,0,W,H);
+ storyCloud(145,85,.8);storyCloud(495,105,.62);
+ ellipse(840,78,37,37,"#ffdf43","#30271f",3);
+ // Colinas dibujadas con contorno, como las grafías del libro.
+ ctx.beginPath();ctx.moveTo(0,345);ctx.quadraticCurveTo(190,270,380,345);ctx.quadraticCurveTo(650,420,960,320);ctx.lineTo(960,600);ctx.lineTo(0,600);ctx.closePath();ctx.fillStyle=stage===0?"#7cbd62":"#6dbb65";ctx.fill();ctx.strokeStyle="#30271f";ctx.lineWidth=4;ctx.stroke();
+ ctx.beginPath();ctx.moveTo(0,425);ctx.quadraticCurveTo(250,365,480,430);ctx.quadraticCurveTo(700,485,960,410);ctx.lineTo(960,600);ctx.lineTo(0,600);ctx.closePath();ctx.fillStyle=stage===4?"#e7bd67":"#9bce70";ctx.fill();ctx.strokeStyle="#30271f";ctx.lineWidth=3;ctx.stroke();
  if(stage===0){
-  drawFence(354);drawLeafVine(45,370,1);drawLeafVine(920,375,-1);
-  for(let i=0;i<8;i++)drawFlower(65+i*118,493+(i%2)*24,["#f3a3bd","#f5d36e","#bba0df"][i%3],.8+(i%3)*.08);
-  // Arbustos secretos para jugar a encontrar a Lulú.
-  for(const x of [105,320,640,850]){ctx.fillStyle="#438f58";ctx.beginPath();ctx.ellipse(x,430,76,36,0,0,Math.PI*2);ctx.ellipse(x-32,410,37,32,0,0,Math.PI*2);ctx.ellipse(x+34,411,40,31,0,0,Math.PI*2);ctx.fill();}
+  // La huerta está triste y casi vacía; Lulú se esconde entre la tierra.
+  ctx.fillStyle="#b8794a";ctx.beginPath();ctx.ellipse(480,492,405,88,0,0,Math.PI*2);ctx.fill();ctx.strokeStyle="#30271f";ctx.lineWidth=4;ctx.stroke();
+  for(const x of [105,320,640,850])storyBush(x,422,.95);
+  for(let i=0;i<5;i++)storyFlower(75+i*190,545,i%2?"#f1d23d":"#e94d55",.7);
  }else if(stage===1){
-  drawFence(325);drawLeafVine(38,365,1);drawLeafVine(925,365,-1);
-  // Cajones de cultivo y tesoros asomándose entre las hojas.
-  for(let i=0;i<4;i++){const x=105+i*220;ctx.fillStyle="#b77b4d";ctx.beginPath();ctx.roundRect(x,405,155,88,13);ctx.fill();ctx.strokeStyle="#805333";ctx.lineWidth=5;ctx.stroke();ctx.fillStyle="#8b5739";ctx.fillRect(x+7,412,141,13);for(let j=0;j<3;j++){ctx.fillStyle=["#6caf63","#e8a24d","#d96e65"][j];ctx.beginPath();ctx.ellipse(x+34+j*43,407,22,12,-.2,Math.PI,Math.PI*2);ctx.fill();}}
-  for(let i=0;i<7;i++)drawFlower(45+i*145,535+(i%2)*10,["#e99dbb","#f4d16c","#bba0df"][i%3],.62);
+  // Cajones y restos vegetales: los tesoros que alimentan la tierra.
+  drawFence(330);
+  for(let i=0;i<4;i++){const x=80+i*220;rounded(x,410,155,92,9,"#a96a3f");ctx.strokeStyle="#30271f";ctx.lineWidth=4;ctx.strokeRect(x+8,420,139,65);}
+  storyVegetable(145,420,"strawberry");storyVegetable(355,420,"carrot");storyVegetable(585,420,"tomato");storyVegetable(800,420,"cilantro");
+  for(let i=0;i<6;i++)storyFlower(45+i*170,548,i%2?"#e94d55":"#f5d33d",.6);
  }else if(stage===2){
-  // Zona de siembra: tierra mullida, surcos y pequeñas herramientas.
-  ctx.fillStyle="#a97853";ctx.beginPath();ctx.ellipse(480,470,470,135,0,0,Math.PI*2);ctx.fill();
-  ctx.strokeStyle="rgba(246,207,151,.5)";ctx.lineWidth=7;
-  for(let i=0;i<5;i++){ctx.beginPath();ctx.ellipse(480,444+i*18,350-i*18,32,0,0,Math.PI*2);ctx.stroke();}
-  drawFence(325);for(let i=0;i<6;i++)drawFlower(40+i*175,545+(i%2)*8,"#f1b0a5",.58);
+  // Tierra seca preparada en surcos para zanahoria, tomate, cilantro y fresa.
+  ctx.fillStyle="#a96f45";ctx.beginPath();ctx.ellipse(480,465,465,135,0,0,Math.PI*2);ctx.fill();ctx.strokeStyle="#30271f";ctx.lineWidth=5;ctx.stroke();
+  ctx.strokeStyle="#d49a61";ctx.lineWidth=8;for(let i=0;i<5;i++){ctx.beginPath();ctx.quadraticCurveTo(200,430+i*22,760,435+i*22);ctx.stroke();}
+  storyVegetable(105,535,"carrot");storyVegetable(835,530,"strawberry");
  }else if(stage===3){
-  drawFence(330);drawLeafVine(25,405,1);drawLeafVine(935,410,-1);
-  // Jardín frondoso: hojas grandes y flores que enmarcan las plantas.
-  for(let i=0;i<7;i++){const x=35+i*145;ctx.fillStyle=i%2?"#4d9e61":"#5caf68";ctx.beginPath();ctx.ellipse(x,470,38,70,-.35,0,Math.PI*2);ctx.ellipse(x+28,485,34,57,.45,0,Math.PI*2);ctx.fill();}
-  for(let i=0;i<8;i++)drawFlower(55+i*120,550,["#f3a4c0","#f6d477","#c4a7df"][i%3],.82);
+  // Las plantas crecen gracias al agua y al compost.
+  drawFence(330);
+  for(let i=0;i<7;i++){const x=40+i*145;storyFlower(x,545,["#ef5362","#f4d23e","#b28bd2"][i%3],.85);}
+  for(const x of [110,850])storyBush(x,435,1.05);
  }else{
-  // Fiesta de cosecha: luz dorada, guirnaldas y árboles cargados de frutos.
-  ctx.strokeStyle="#9b744d";ctx.lineWidth=5;ctx.beginPath();ctx.moveTo(0,255);ctx.quadraticCurveTo(480,345,960,250);ctx.stroke();
-  for(let i=0;i<11;i++){const x=35+i*89,y=270+Math.sin(i/10*Math.PI)*40;ctx.beginPath();ctx.arc(x,y,8,0,Math.PI*2);ctx.fillStyle=["#f4a1ae","#f6d477","#bda1dc","#9bcf9a"][i%4];ctx.fill();}
-  for(const x of [105,855]){ctx.fillStyle="#8a704b";ctx.fillRect(x-9,345,18,115);ctx.fillStyle="#75a968";ctx.beginPath();ctx.arc(x,330,65,0,Math.PI*2);ctx.arc(x-38,350,42,0,Math.PI*2);ctx.arc(x+38,350,42,0,Math.PI*2);ctx.fill();for(let j=0;j<5;j++){ctx.beginPath();ctx.arc(x-35+j*17,320+(j%2)*25,8,0,Math.PI*2);ctx.fillStyle="#e87962";ctx.fill();}}
-  for(let i=0;i<7;i++)drawFlower(55+i*145,545,["#f0a0b6","#f6d477","#bda1dc"][i%3],.72);
+  // La huerta florecida y la cosecha final del cuento.
+  drawFence(320);
+  for(const x of [90,870])storyBush(x,420,1.15);
+  storyVegetable(170,455,"carrot");storyVegetable(330,460,"tomato");storyVegetable(630,460,"cilantro");storyVegetable(790,455,"strawberry");
+  for(let i=0;i<8;i++)storyFlower(35+i*128,550,["#ef5362","#f4d23e","#b28bd2"][i%3],.82);
+  // Guirnalda sencilla para celebrar la cosecha.
+  handLine([[0,255],[220,285],[480,300],[730,280],[960,250]],"#30271f",3);
+  for(let i=0;i<10;i++){const x=35+i*98,y=260+Math.sin(i/9*Math.PI)*35;ctx.beginPath();ctx.moveTo(x-8,y-6);ctx.lineTo(x+8,y-6);ctx.lineTo(x,y+13);ctx.closePath();ctx.fillStyle=["#ef5362","#f4d23e","#b28bd2","#54a965"][i%4];ctx.fill();ctx.strokeStyle="#30271f";ctx.lineWidth=2;ctx.stroke();}
  }
- // Pequeños detalles animados, discretos y siempre detrás de los objetos del juego.
- if(stage!==2){drawButterfly(185+Math.sin(anim/55)*35,205,"#efa5c5",0);drawButterfly(735+Math.cos(anim/60)*24,250,"#b79cde",2);}
+ if(stage!==2){drawButterfly(185+Math.sin(anim/55)*35,205,"#ef5362",0);drawButterfly(735+Math.cos(anim/60)*24,250,"#b28bd2",2);}
  if(stage>=1)drawBee(360+Math.sin(anim/34)*22,190,1);
  if(stage>=3){drawLadybug(770,470,3);drawBee(550,300,5);}
- // Brillitos suaves del mundo mágico.
- for(let i=0;i<9;i++){const x=(i*137+anim*.22)%960,y=145+(i*61)%245+Math.sin(anim/24+i)*5;ctx.globalAlpha=.22+.16*Math.sin(anim/18+i);ctx.fillStyle="#fff8cf";ctx.beginPath();ctx.arc(x,y,2.5,0,Math.PI*2);ctx.fill();}
+ for(let i=0;i<7;i++){const x=(i*137+anim*.22)%960,y=150+(i*61)%230+Math.sin(anim/24+i)*5;ctx.globalAlpha=.35+.2*Math.sin(anim/18+i);ctx.fillStyle="#fff5b5";ctx.beginPath();ctx.arc(x,y,2.5,0,Math.PI*2);ctx.fill();}
  ctx.globalAlpha=1;
 }
 function toast(t){message.textContent=t;message.style.display="block";toastTimer=130;}
