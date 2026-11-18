@@ -6,8 +6,8 @@ body{display:flex;justify-content:center;align-items:center;padding:24px}
 .topbar{display:flex;justify-content:space-between;align-items:center;padding:15px 24px;background:rgba(255,255,255,.86);border-bottom:1px solid rgba(38,59,50,.1);gap:12px}
 .brand{font-weight:750;font-size:clamp(15px,2.5vw,21px);letter-spacing:-.45px;display:flex;align-items:center;gap:10px}.brand-mark{font-size:23px}
 .top-actions{display:flex;gap:9px}.small-btn{border:1px solid #d8e0d5;background:#fff;border-radius:999px;padding:9px 15px;font-weight:650;color:#385442;cursor:pointer;transition:background .2s,border-color .2s}.small-btn:hover{background:#eff5eb;border-color:#b7cbb8}
-.game-shell{position:relative;background:#bfe5d4;line-height:0}
-canvas{display:block;width:100%;height:auto;touch-action:manipulation}
+.game-shell{position:relative;background:#bfe5d4;line-height:0;touch-action:none;overscroll-behavior:contain}
+canvas{display:block;width:100%;height:auto;touch-action:none;overscroll-behavior:contain;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
 .overlay,.pause-panel{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(33,58,44,.18);backdrop-filter:blur(3px);line-height:1.4}
 .panel{width:min(490px,94%);text-align:center;background:rgba(255,254,248,.97);border:1px solid rgba(49,93,67,.15);border-radius:25px;padding:28px 30px;box-shadow:0 18px 48px rgba(31,60,42,.2)}
 .panel h1{font-size:clamp(31px,5.6vw,52px);line-height:1.02;letter-spacing:-1.8px;margin:7px 0 14px;color:#37694a;text-shadow:none}
