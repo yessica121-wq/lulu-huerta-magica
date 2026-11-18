@@ -66,7 +66,81 @@ function drawLulu(x,y,s=1,mood="happy"){
 function drawButterfly(x,y,color,phase){ctx.save();ctx.translate(x+Math.sin(anim/24+phase)*12,y+Math.cos(anim/18+phase)*7);ctx.fillStyle=color;ctx.beginPath();ctx.ellipse(-8,0,8,12,Math.sin(anim/5)*.6,0,Math.PI*2);ctx.ellipse(8,0,8,12,-Math.sin(anim/5)*.6,0,Math.PI*2);ctx.fill();ctx.strokeStyle="#59442f";ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(0,-7);ctx.lineTo(0,8);ctx.stroke();ctx.restore();}
 function drawBee(x,y,phase){ctx.save();ctx.translate(x+Math.sin(anim/17+phase)*10,y+Math.cos(anim/13+phase)*8);ellipse(0,0,12,8,"#ffd84b","#5b4828",2);ctx.strokeStyle="#5b4828";ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(-4,-7);ctx.lineTo(-4,7);ctx.moveTo(4,-7);ctx.lineTo(4,7);ctx.stroke();ellipse(-5,-11,6,4,"#fffdf2","none",0);ellipse(5,-11,6,4,"#fffdf2","none",0);ctx.restore();}
 function drawLadybug(x,y,phase){const xx=x+Math.sin(anim/30+phase)*8,yy=y+Math.cos(anim/21+phase)*5;ellipse(xx,yy,10,8,"#e94f52","#49352c",2);ctx.strokeStyle="#49352c";ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(xx,yy-7);ctx.lineTo(xx,yy+7);ctx.stroke();ellipse(xx-4,yy-2,1.7,1.7,"#30271f","none",0);ellipse(xx+4,yy+2,1.7,1.7,"#30271f","none",0);}
-function background(){const stage=Math.max(0,Math.min(5,mission));const g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,stage>=3?"#78d8f4":"#91dcfa");g.addColorStop(.62,stage>=2?"#c9f0a8":"#d9f5bd");g.addColorStop(1,stage>=4?"#8bd36c":"#b9df83");ctx.fillStyle=g;ctx.fillRect(0,0,W,H);ellipse(835,78,42,42,"#ffe16a");for(const [x,y] of [[130,80],[420,60],[680,130]]){ellipse(x,y,42,17,"#fffdf2","none",0);ellipse(x-25,y+3,25,16,"#fffdf2","none",0);ellipse(x+24,y+2,27,16,"#fffdf2","none",0);}ctx.fillStyle=stage>=3?"#65bd61":"#79c76a";ctx.beginPath();ctx.moveTo(0,345);ctx.quadraticCurveTo(230,285,450,350);ctx.quadraticCurveTo(690,405,960,320);ctx.lineTo(960,600);ctx.lineTo(0,600);ctx.fill();ctx.fillStyle=stage>=2?"#a96b42":"#99613b";ctx.beginPath();ctx.ellipse(480,455,390,76,0,0,Math.PI*2);ctx.fill();for(let i=0;i<10;i++){const x=35+i*100,y=520+(i%3)*18;for(let a=0;a<5;a++){const q=a*Math.PI*2/5;ellipse(x+Math.cos(q)*10,y+Math.sin(q)*10,7,7,i%2?"#ff8eaa":"#fff17b","none",0);}ellipse(x,y,5,5,"#f5a62b","none",0);}if(stage>=1){drawButterfly(180,205,"#f49ac2",0);drawButterfly(760,270,"#b58ae8",2);}if(stage>=2){drawBee(330,180,1);drawLadybug(700,480,3);}if(stage>=4){drawButterfly(520,160,"#ffb34f",4);drawBee(850,390,5);drawLadybug(120,470,6);}}
+function drawCloud(x,y,s=1){
+ ctx.save();ctx.translate(x+Math.sin(anim/90+x)*9,y);ctx.scale(s,s);
+ ctx.fillStyle="rgba(255,255,246,.88)";ctx.beginPath();ctx.ellipse(0,5,43,15,0,0,Math.PI*2);ctx.ellipse(-22,0,20,18,0,0,Math.PI*2);ctx.ellipse(2,-10,24,23,0,0,Math.PI*2);ctx.ellipse(26,1,20,16,0,0,Math.PI*2);ctx.fill();ctx.restore();
+}
+function drawFlower(x,y,color="#f6a4bd",scale=1){
+ ctx.save();ctx.translate(x,y);ctx.scale(scale,scale);ctx.strokeStyle="#4d9656";ctx.lineWidth=5;ctx.beginPath();ctx.moveTo(0,10);ctx.quadraticCurveTo(-3,-8,0,-25);ctx.stroke();
+ ctx.fillStyle="#65b96b";ctx.beginPath();ctx.ellipse(-9,-8,10,5,-.5,0,Math.PI*2);ctx.ellipse(9,-14,9,5,.5,0,Math.PI*2);ctx.fill();
+ for(let i=0;i<5;i++){const a=i*Math.PI*2/5;ctx.beginPath();ctx.ellipse(Math.cos(a)*10,-29+Math.sin(a)*10,7,10,a,0,Math.PI*2);ctx.fillStyle=color;ctx.fill();}
+ ctx.beginPath();ctx.arc(0,-29,6,0,Math.PI*2);ctx.fillStyle="#f8d66d";ctx.fill();ctx.restore();
+}
+function drawFence(y=345){
+ ctx.save();ctx.strokeStyle="#a97950";ctx.lineWidth=8;ctx.lineCap="round";
+ for(let x=18;x<960;x+=82){ctx.beginPath();ctx.moveTo(x,y+35);ctx.lineTo(x,y-25);ctx.lineTo(x+12,y-38);ctx.lineTo(x+24,y-25);ctx.lineTo(x+24,y+35);ctx.stroke();}
+ ctx.lineWidth=6;ctx.beginPath();ctx.moveTo(0,y-2);ctx.lineTo(960,y-2);ctx.moveTo(0,y+22);ctx.lineTo(960,y+22);ctx.stroke();ctx.restore();
+}
+function drawLeafVine(x,y,flip=1){
+ ctx.save();ctx.translate(x,y);ctx.scale(flip,1);ctx.strokeStyle="#4b9657";ctx.lineWidth=5;ctx.beginPath();ctx.moveTo(0,0);ctx.bezierCurveTo(35,-20,25,-65,72,-76);ctx.stroke();
+ for(let i=0;i<4;i++){const yy=-13-i*17,xx=13+i*13;ctx.fillStyle=i%2?"#79bd70":"#5ba963";ctx.beginPath();ctx.ellipse(xx,yy,15,7,-.55,0,Math.PI*2);ctx.fill();}ctx.restore();
+}
+function background(){
+ const stage=Math.max(0,Math.min(4,mission));
+ const palettes=[
+  ["#91d9f3","#d9f1d0","#8bc878","#b7d98c"],
+  ["#a8ddf0","#e9efc7","#91c879","#b2d58b"],
+  ["#b6e5f1","#e4edc8","#8cbd70","#a87550"],
+  ["#9ddcf0","#d9f0c9","#68b875","#8cbd72"],
+  ["#f5d7a0","#f7e6bd","#a5bd72","#c78c55"]
+ ];
+ const p=palettes[stage],sky=ctx.createLinearGradient(0,0,0,H);
+ sky.addColorStop(0,p[0]);sky.addColorStop(.67,p[1]);sky.addColorStop(1,p[3]);ctx.fillStyle=sky;ctx.fillRect(0,0,W,H);
+ // Sol, nubes y pequeñas motas de luz: el mismo lenguaje de cuento en todas las páginas.
+ const sunX=stage===4?790:835,sunY=stage===4?95:78;
+ const glow=ctx.createRadialGradient(sunX,sunY,8,sunX,sunY,105);glow.addColorStop(0,"rgba(255,239,166,.52)");glow.addColorStop(1,"rgba(255,239,166,0)");
+ ctx.fillStyle=glow;ctx.fillRect(sunX-110,sunY-110,220,220);ctx.beginPath();ctx.arc(sunX,sunY,stage===4?34:39,0,Math.PI*2);ctx.fillStyle=stage===4?"#ffd58a":"#ffe69a";ctx.fill();
+ drawCloud(170,82,.8);drawCloud(500,120,.62);
+ // Colinas en capas para dar profundidad al paisaje.
+ ctx.fillStyle=stage===4?"#b5c77d":"#83c982";ctx.beginPath();ctx.moveTo(0,315);ctx.quadraticCurveTo(155,235,335,310);ctx.quadraticCurveTo(525,375,710,286);ctx.quadraticCurveTo(850,245,960,300);ctx.lineTo(960,600);ctx.lineTo(0,600);ctx.fill();
+ ctx.fillStyle=stage===0?"#78bd78":stage===4?"#91b96c":"#70b879";ctx.beginPath();ctx.moveTo(0,365);ctx.quadraticCurveTo(220,300,430,375);ctx.quadraticCurveTo(675,435,960,340);ctx.lineTo(960,600);ctx.lineTo(0,600);ctx.fill();
+ // Cada misión descubre una zona distinta del mismo mundo.
+ if(stage===0){
+  drawFence(354);drawLeafVine(45,370,1);drawLeafVine(920,375,-1);
+  for(let i=0;i<8;i++)drawFlower(65+i*118,493+(i%2)*24,["#f3a3bd","#f5d36e","#bba0df"][i%3],.8+(i%3)*.08);
+  // Arbustos secretos para jugar a encontrar a Lulú.
+  for(const x of [105,320,640,850]){ctx.fillStyle="#438f58";ctx.beginPath();ctx.ellipse(x,430,76,36,0,0,Math.PI*2);ctx.ellipse(x-32,410,37,32,0,0,Math.PI*2);ctx.ellipse(x+34,411,40,31,0,0,Math.PI*2);ctx.fill();}
+ }else if(stage===1){
+  drawFence(325);drawLeafVine(38,365,1);drawLeafVine(925,365,-1);
+  // Cajones de cultivo y tesoros asomándose entre las hojas.
+  for(let i=0;i<4;i++){const x=105+i*220;ctx.fillStyle="#b77b4d";ctx.beginPath();ctx.roundRect(x,405,155,88,13);ctx.fill();ctx.strokeStyle="#805333";ctx.lineWidth=5;ctx.stroke();ctx.fillStyle="#8b5739";ctx.fillRect(x+7,412,141,13);for(let j=0;j<3;j++){ctx.fillStyle=["#6caf63","#e8a24d","#d96e65"][j];ctx.beginPath();ctx.ellipse(x+34+j*43,407,22,12,-.2,Math.PI,Math.PI*2);ctx.fill();}}
+  for(let i=0;i<7;i++)drawFlower(45+i*145,535+(i%2)*10,["#e99dbb","#f4d16c","#bba0df"][i%3],.62);
+ }else if(stage===2){
+  // Zona de siembra: tierra mullida, surcos y pequeñas herramientas.
+  ctx.fillStyle="#a97853";ctx.beginPath();ctx.ellipse(480,470,470,135,0,0,Math.PI*2);ctx.fill();
+  ctx.strokeStyle="rgba(246,207,151,.5)";ctx.lineWidth=7;
+  for(let i=0;i<5;i++){ctx.beginPath();ctx.ellipse(480,444+i*18,350-i*18,32,0,0,Math.PI*2);ctx.stroke();}
+  drawFence(325);for(let i=0;i<6;i++)drawFlower(40+i*175,545+(i%2)*8,"#f1b0a5",.58);
+ }else if(stage===3){
+  drawFence(330);drawLeafVine(25,405,1);drawLeafVine(935,410,-1);
+  // Jardín frondoso: hojas grandes y flores que enmarcan las plantas.
+  for(let i=0;i<7;i++){const x=35+i*145;ctx.fillStyle=i%2?"#4d9e61":"#5caf68";ctx.beginPath();ctx.ellipse(x,470,38,70,-.35,0,Math.PI*2);ctx.ellipse(x+28,485,34,57,.45,0,Math.PI*2);ctx.fill();}
+  for(let i=0;i<8;i++)drawFlower(55+i*120,550,["#f3a4c0","#f6d477","#c4a7df"][i%3],.82);
+ }else{
+  // Fiesta de cosecha: luz dorada, guirnaldas y árboles cargados de frutos.
+  ctx.strokeStyle="#9b744d";ctx.lineWidth=5;ctx.beginPath();ctx.moveTo(0,255);ctx.quadraticCurveTo(480,345,960,250);ctx.stroke();
+  for(let i=0;i<11;i++){const x=35+i*89,y=270+Math.sin(i/10*Math.PI)*40;ctx.beginPath();ctx.arc(x,y,8,0,Math.PI*2);ctx.fillStyle=["#f4a1ae","#f6d477","#bda1dc","#9bcf9a"][i%4];ctx.fill();}
+  for(const x of [105,855]){ctx.fillStyle="#8a704b";ctx.fillRect(x-9,345,18,115);ctx.fillStyle="#75a968";ctx.beginPath();ctx.arc(x,330,65,0,Math.PI*2);ctx.arc(x-38,350,42,0,Math.PI*2);ctx.arc(x+38,350,42,0,Math.PI*2);ctx.fill();for(let j=0;j<5;j++){ctx.beginPath();ctx.arc(x-35+j*17,320+(j%2)*25,8,0,Math.PI*2);ctx.fillStyle="#e87962";ctx.fill();}}
+  for(let i=0;i<7;i++)drawFlower(55+i*145,545,["#f0a0b6","#f6d477","#bda1dc"][i%3],.72);
+ }
+ // Pequeños detalles animados, discretos y siempre detrás de los objetos del juego.
+ if(stage!==2){drawButterfly(185+Math.sin(anim/55)*35,205,"#efa5c5",0);drawButterfly(735+Math.cos(anim/60)*24,250,"#b79cde",2);}
+ if(stage>=1)drawBee(360+Math.sin(anim/34)*22,190,1);
+ if(stage>=3){drawLadybug(770,470,3);drawBee(550,300,5);}
+ // Brillitos suaves del mundo mágico.
+ for(let i=0;i<9;i++){const x=(i*137+anim*.22)%960,y=145+(i*61)%245+Math.sin(anim/24+i)*5;ctx.globalAlpha=.22+.16*Math.sin(anim/18+i);ctx.fillStyle="#fff8cf";ctx.beginPath();ctx.arc(x,y,2.5,0,Math.PI*2);ctx.fill();}
+ ctx.globalAlpha=1;
+}
 function toast(t){message.textContent=t;message.style.display="block";toastTimer=130;}
 function labels(){missionLabel.textContent=missions[mission]||"¡Aventura completada!";seedLabel.textContent="Semillitas: "+seeds+" / 5   ⭐ "+stars+"/5";}
 function init(){picked=0;items=[];dragging=null;waterDrops=[];sparkles=[];plots=[];if(mission===1)items=[["seed",150,245],["seed",340,300],["plant",520,230],["plant",790,290],["carrot",230,430],["strawberry",430,430],["tomato",640,420],["corn",810,445],["flower",120,390],["lettuce",350,180],["pumpkin",610,190],["rock",900,450]];if(mission===2){items=[["seed",230,255],["seed",480,255],["seed",730,255]];plots=[{x:280,y:455,done:false},{x:480,y:455,done:false},{x:680,y:455,done:false}];}if(mission===3){items=[["plant",230,355],["plant",480,355],["plant",730,355]];waterCan={x:845,y:220};}if(mission===4)items=[["strawberry",150,310],["carrot",310,300],["tomato",470,310],["corn",640,300],["pumpkin",810,315],["lettuce",250,450],["flower",500,455],["strawberry",740,455]];items=items.map(a=>({type:a[0],x:a[1],y:a[2],done:false,growth:0}));}
